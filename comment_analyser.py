@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
+from typing import List, Tuple
 
 from constants.chatlog import CHATLOG
 from constants.system_content import SYSTEM_CONTENT
@@ -34,3 +35,14 @@ class CommentAnalyser:
         print(f'prompt tokens: {response.usage.prompt_tokens}')
         # print(response.choices[0].message.content)
         return response.choices[0].message.content
+
+    def _parse_openai_response(self, response: str) -> List[Tuple[int, str]]:
+        """ Parse OpenAI response to the following format:
+            [(line_number, suggestion), ...]
+        """
+        suggestions = []
+        for line in response.split("\n"):
+            if line:
+                line_number, suggestion = line.split(", ", 1)
+                suggestions.append((int(line_number), suggestion))
+        return suggestions
