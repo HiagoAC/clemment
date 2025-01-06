@@ -17,6 +17,12 @@ class CommentAnalyser:
             raise ValueError(
                 "OpenAI API key is not set in the environment variables.")
 
+    def analyse_comments(self, prompt: str, model: str = "gpt-4o-mini"
+                         ) -> list:
+        response = self._get_openai_response(prompt, model)
+        suggestions = self._parse_openai_response(response)
+        return suggestions
+
     def _get_openai_response(self, prompt: str, model: str) -> str:
         """ Get response from OpenAI API. """
         messages = [
