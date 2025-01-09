@@ -171,4 +171,4 @@ cython_debug/
 .pypirc
 
 # other files
-main.py
+test_runner.py
