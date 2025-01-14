@@ -24,7 +24,7 @@ class CommentAnalyser:
         suggestions = self._parse_openai_response(response)
         return suggestions
 
-    def _get_openai_response(self, prompt: str, model: str) -> str:
+    def _get_openai_response(self, prompt: str, model: str) -> List[str]:
         """ Get response from OpenAI API. """
         messages = [
             {"role": "system", "content": SYSTEM_CONTENT},
@@ -36,26 +36,37 @@ class CommentAnalyser:
             model=model,
             messages=messages,
             temperature=0.1,
+            n=3,
             )
         print(f'model: {model}')
         print(f'completion tokens: {response.usage.completion_tokens}')
         print(f'prompt tokens: {response.usage.prompt_tokens}')
         # print(response.choices[0].message.content)
-        return response.choices[0].message.content
+        return [choice.message.content for choice in response.choices]
 
-    def _parse_openai_response(self, response: str) -> List[Tuple[int, str]]:
+    def _parse_openai_response(self, responses: List[str]) -> List[Tuple[int, str]]:
         """ Parse OpenAI response to the following format:
             [(line_number, suggestion), ...]
         """
         suggestions = []
         pattern = r"(\d+), (.+)"
-        for line in response.split("\n"):
-            match = re.match(pattern, line.strip())
-            if match:
-                line_number, suggestion = match.groups()
-                suggestions.append((int(line_number), suggestion))
-            else:
-                raise ValueError(
-                    f'OpenAI response is not in the expected format.
-                    \n{response}')
+        for response in responses:
+            for line in response.split("\n"):
+                match = re.match(pattern, line.strip())
+                if match:
+                    line_number, suggestion = match.groups()
+                    suggestions.append((int(line_number), suggestion))
+                else: 
+                # If the response is not in the expected format,
+                # try the next response
+                    suggestions = []
+                    break
+            # If the response is in the expected format, ignore next responses
+            break
+            
+        if not suggestions:
+            raise ValueError(
+                f'OpenAI response is not in the expected format.
+                \n{response}')
+
         return suggestions
