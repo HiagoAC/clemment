@@ -1,4 +1,5 @@
 import os
+import re
 from dotenv import load_dotenv
 from openai import OpenAI
 from typing import List, Tuple
@@ -47,8 +48,14 @@ class CommentAnalyser:
             [(line_number, suggestion), ...]
         """
         suggestions = []
+        pattern = r"(\d+), (.+)"
         for line in response.split("\n"):
-            if line:
-                line_number, suggestion = line.split(", ", 1)
+            match = re.match(pattern, line.strip())
+            if match:
+                line_number, suggestion = match.groups()
                 suggestions.append((int(line_number), suggestion))
+            else:
+                raise ValueError(
+                    f'OpenAI response is not in the expected format.
+                    \n{response}')
         return suggestions
