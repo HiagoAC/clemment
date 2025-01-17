@@ -1,3 +1,4 @@
+import math
 import os
 import re
 from dotenv import load_dotenv
@@ -6,23 +7,41 @@ from typing import List, Tuple
 
 from constants.chatlog import CHATLOG
 from constants.system_content import SYSTEM_CONTENT
+from token_limits import TokenLimits
 
 
 class CommentAnalyser:
     """ Analyse comments in source code. """
     def __init__(self):
+        # Load OpenAI API key from environment variables
         load_dotenv()
         if os.getenv('OPENAI_API_KEY') is not None:
             self.api_key = os.getenv('OPENAI_API_KEY')
         else:
             raise ValueError(
                 "OpenAI API key is not set in the environment variables.")
+        
+        # Load token limits for OpenAI models
+        self.token_limits = TokenLimits()
 
     def analyse_comments(self, prompt: str, model: str = "gpt-4o-mini"
                          ) -> list:
-        response = self._get_openai_response(prompt, model)
-        suggestions = self._parse_openai_response(response)
+        """ Analyse comments in source code. """
+        chunks = self._split_prompt(prompt, model)
+        suggestions = []
+        for chunk in chunks:
+            response = self._get_openai_response(chunk, model)
+            suggestions.append(self._parse_openai_response(response))
         return suggestions
+
+    def _split_prompt(self, prompt: str, model: str) -> List[str]:
+        """ Split prompt into multiple chunks to avoid token limit. """
+        chunk_size = math.ceil(
+            self.token_limits.get_token_limit(model) * 0.75)
+        chunks = []
+        for i in range(0, len(prompt), chunk_size):
+            chunks.append(prompt[i:i + chunk_size])
+        return chunks
 
     def _get_openai_response(self, prompt: str, model: str) -> List[str]:
         """ Get response from OpenAI API. """
@@ -38,10 +57,8 @@ class CommentAnalyser:
             temperature=0.1,
             n=3,
             )
-        print(f'model: {model}')
         print(f'completion tokens: {response.usage.completion_tokens}')
         print(f'prompt tokens: {response.usage.prompt_tokens}')
-        # print(response.choices[0].message.content)
         return [choice.message.content for choice in response.choices]
 
     def _parse_openai_response(self, responses: List[str]) -> List[Tuple[int, str]]:
