@@ -23,7 +23,7 @@ class CommentAnalyser:
         else:
             raise ValueError(
                 "OpenAI API key is not set in the environment variables.")
-        
+
         # Load token limits for OpenAI models
         self.token_limits = TokenLimits()
 
@@ -68,7 +68,8 @@ class CommentAnalyser:
         print(f'prompt tokens: {response.usage.prompt_tokens}')
         return [choice.message.content for choice in response.choices]
 
-    def _parse_openai_response(self, responses: List[str]) -> List[Tuple[int, str]]:
+    def _parse_openai_response(self, responses: List[str]
+                               ) -> List[Tuple[int, str]]:
         """ Parse OpenAI response to the following format:
             [(line_number, suggestion), ...]
         """
@@ -80,14 +81,14 @@ class CommentAnalyser:
                 if match:
                     line_number, suggestion = match.groups()
                     suggestions.append((int(line_number), suggestion))
-                else: 
-                # If the response is not in the expected format,
-                # try the next response
+                else:
+                    # If the response is not in the expected format,
+                    # try the next response
                     suggestions = []
                     break
             # If the response is in the expected format, ignore next responses
             break
-            
+
         if not suggestions:
             raise ValueError(
                 f'OpenAI response is not in the expected format.\n{response}')
