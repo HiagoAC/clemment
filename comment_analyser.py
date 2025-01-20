@@ -49,7 +49,7 @@ class CommentAnalyser:
     def _get_openai_response(self, prompt: str, model: str) -> List[str]:
         """ Get response from OpenAI API. """
         with open(system_content_path, "r") as file:
-            system_content = json.load(file)
+            system_content = json.load(file).get("system_content")
         with open(chatlog_path, "r") as file:
             chatlog = json.load(file)
         messages = [
