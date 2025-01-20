@@ -90,7 +90,6 @@ class CommentAnalyser:
             
         if not suggestions:
             raise ValueError(
-                f'OpenAI response is not in the expected format.
-                \n{response}')
+                f'OpenAI response is not in the expected format.\n{response}')
 
         return suggestions
