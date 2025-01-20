@@ -1,3 +1,4 @@
+import json
 import math
 import os
 import re
@@ -5,9 +6,11 @@ from dotenv import load_dotenv
 from openai import OpenAI
 from typing import List, Tuple
 
-from constants.chatlog import CHATLOG
-from constants.system_content import SYSTEM_CONTENT
 from token_limits import TokenLimits
+
+
+system_content_path = os.path.join(os.path.dirname(__file__), "data/system_content.json")
+chatlog_path = os.path.join(os.path.dirname(__file__), "data/chatlog.json")
 
 
 class CommentAnalyser:
@@ -45,9 +48,13 @@ class CommentAnalyser:
 
     def _get_openai_response(self, prompt: str, model: str) -> List[str]:
         """ Get response from OpenAI API. """
+        with open(system_content_path, "r") as file:
+            system_content = json.load(file)
+        with open(chatlog_path, "r") as file:
+            chatlog = json.load(file)
         messages = [
-            {"role": "system", "content": SYSTEM_CONTENT},
-            *CHATLOG,
+            {"role": "system", "content": system_content},
+            *chatlog,
             {"role": "user", "content": prompt}
         ]
         client = OpenAI(api_key=self.api_key)

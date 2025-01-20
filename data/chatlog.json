@@ -1,0 +1,10 @@
+[
+    {
+        "role": "user",
+        "content": "@meal_plan_router.get('/', response=List[MealPlanListSchema], url_name='meal_plans')\ndef meal_plan_list(request):\n    \"\"\"Delete all meal plans in the system.\"\"\"\n    user = request.auth\n    queryset = MealPlan.objects.filter(user=user).order_by('-creation_date')\n    return queryset\n\n\n@meal_plan_router.get('/current', response={200: MealPlanOut, 204: None}, url_name='current_meal_plan')\ndef get_current_meal_plan(request):\n    \"\"\"Retrieve details of current meal plan which is the latest meal plan that is at most a week old.\"\"\"\n    user = request.auth\n    one_week_ago = datetime.now().date() - timedelta(days=7)\n    meal_plan = MealPlan.objects.filter(user=user, creation_date__gte=one_week_ago).order_by('-creation_date').first()\n    if meal_plan is None:\n        return 204, None  # There are not enough meal plans\n    return meal_plan"
+    },
+    {
+        "role": "assistant",
+        "content": "4, Retrieve all meal plans in the system.\n22, There are no meal plans."
+    }
+]
