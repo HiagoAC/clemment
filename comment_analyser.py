@@ -14,6 +14,8 @@ class CommentAnalyser:
     def __init__(self):
         self.SYSTEM_CONTENT_PATH = "./data/system_content.json"
         self.CHATLOG_PATH = "./data/chatlog.json"
+        self.total_completion_tokens = 0
+        self.total_prompt_tokens = 0
 
         # Load OpenAI API key from environment variables
         load_dotenv()
@@ -63,8 +65,10 @@ class CommentAnalyser:
             temperature=0.1,
             n=3,
             )
-        print(f'completion tokens: {response.usage.completion_tokens}')
-        print(f'prompt tokens: {response.usage.prompt_tokens}')
+
+        self.total_completion_tokens += response.usage.completion_tokens
+        self.total_prompt_tokens += response.usage.prompt_tokens
+
         return [choice.message.content for choice in response.choices]
 
     def _parse_openai_response(self, responses: List[str]

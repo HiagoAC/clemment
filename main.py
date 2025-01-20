@@ -1,6 +1,13 @@
 import argparse
 import os
+from typing import TypedDict, List, Tuple
+
 from comment_analyser import CommentAnalyser
+
+class ProcessFileResult(TypedDict):
+    suggestions: List[Tuple[int, str]]
+    prompt_tokens: int
+    completion_tokens: int
 
 
 def main() -> None:
@@ -10,20 +17,33 @@ def main() -> None:
     """
     parser = argparse.ArgumentParser()
     parser.add_argument("paths", nargs="+", help="Paths to source code files.")
-
-    # Parse command line arguments
     args = parser.parse_args()
+
+    suggestions = []
+    total_prompt_tokens = 0
+    total_completion_tokens = 0
 
     for path in args.paths:
         if os.path.isfile(path):
-            process_file(path)
+            res = process_file(path)
+            suggestions.append((path, res["suggestions"]))
+            total_prompt_tokens += res["prompt_tokens"]
+            total_completion_tokens += res["completion_tokens"]
         elif os.path.isdir(path):
             process_directory(path)
         else:
             print(f"Invalid path: {path}")
 
+    print(f"Total prompt tokens: {total_prompt_tokens}")
+    print(f"Total completion tokens: {total_completion_tokens}")
+    print("Suggestions:")
+    for path, suggestion in suggestions:
+        print(f"File: {path}")
+        for line_number, suggestion in suggestions:
+            print(f"Line {line_number}: {suggestion}")
 
-def process_file(path: str) -> None:
+
+def process_file(path: str) -> ProcessFileResult:
     """
     Process a single file to analyze comments.
 
@@ -35,10 +55,12 @@ def process_file(path: str) -> None:
 
     comment_analyser = CommentAnalyser()
     suggestions = comment_analyser.analyse_comments(source_code)
-
-    print(f"File: {path}")
-    for line_number, suggestion in suggestions:
-        print(f"Line {line_number}: {suggestion}")
+    
+    return {
+        "suggestions": suggestions,
+        "prompt_tokens": comment_analyser.total_prompt_tokens,
+        "completion_tokens": comment_analyser.total_completion_tokens,
+    }
 
 
 def process_directory(path: str) -> None:
