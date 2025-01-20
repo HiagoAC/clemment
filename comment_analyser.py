@@ -34,7 +34,7 @@ class CommentAnalyser:
         suggestions = []
         for chunk in chunks:
             response = self._get_openai_response(chunk, model)
-            suggestions.append(self._parse_openai_response(response))
+            suggestions.extend(self._parse_openai_response(response))
         return suggestions
 
     def _split_prompt(self, prompt: str, model: str) -> List[str]:
