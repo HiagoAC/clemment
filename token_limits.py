@@ -18,5 +18,6 @@ class TokenLimits:
         Return the smallest token limit of the models available if the model
         is not found.
         """
-        smallest = min(self._model_token_limits.values())
-        return self._model_token_limits.get(model, smallest)
+        if model in self._model_token_limits:
+            return self._model_token_limits.get(model)
+        return min(self._model_token_limits.values())
