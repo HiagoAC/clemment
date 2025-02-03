@@ -2,6 +2,7 @@ import argparse
 import os
 
 from helpers import analyse_comments_in_path
+from openai_client_factory import OpenAIClientFactory
 
 def main() -> None:
     """
