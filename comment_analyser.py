@@ -1,8 +1,6 @@
 import json
 import math
-import os
 import re
-from dotenv import load_dotenv
 from openai import OpenAI
 from typing import List, Tuple
 
@@ -11,19 +9,12 @@ from token_limits import TokenLimits
 
 class CommentAnalyser:
     """ Analyse comments in source code. """
-    def __init__(self):
+    def __init__(self, client: OpenAI):
         self.SYSTEM_CONTENT_PATH = "./data/system_content.json"
         self.CHATLOG_PATH = "./data/chatlog.json"
         self.total_completion_tokens = 0
         self.total_prompt_tokens = 0
-
-        # Load OpenAI API key from environment variables
-        load_dotenv()
-        if os.getenv('OPENAI_API_KEY') is not None:
-            self.api_key = os.getenv('OPENAI_API_KEY')
-        else:
-            raise ValueError(
-                "OpenAI API key is not set in the environment variables.")
+        self.client = client
 
         # Load token limits for OpenAI models
         self.token_limits = TokenLimits()
@@ -58,8 +49,7 @@ class CommentAnalyser:
             *chatlog,
             {"role": "user", "content": prompt}
         ]
-        client = OpenAI(api_key=self.api_key)
-        response = client.chat.completions.create(
+        response = self.client.chat.completions.create(
             model=model,
             messages=messages,
             temperature=0.1,
@@ -94,6 +84,6 @@ class CommentAnalyser:
 
         if not suggestions:
             raise ValueError(
-                f'OpenAI response is not in the expected format.\n{response}')
+                f'OpenAI response is not in the expected format.\n{responses}')
 
         return suggestions
