@@ -1,5 +1,6 @@
 import os
 from typing import TypedDict, List, Tuple
+from openai_client_factory import OpenAIClientFactory
 from comment_analyser import CommentAnalyser
 
 
@@ -19,8 +20,8 @@ def process_file(path: str) -> CommentAnalysis:
     """
     with open(path, "r") as file:
         source_code = file.read()
-
-    comment_analyser = CommentAnalyser()
+    openai_client = OpenAIClientFactory().create_client()
+    comment_analyser = CommentAnalyser(client=openai_client)
     suggestions = comment_analyser.analyse_comments(source_code)
     print(len(suggestions))
     return {
