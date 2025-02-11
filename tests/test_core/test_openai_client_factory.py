@@ -3,7 +3,7 @@ from openai import OpenAI
 from unittest import TestCase
 from unittest.mock import patch
 
-from openai_client_factory import OpenAIClientFactory
+from core.openai_client_factory import OpenAIClientFactory
 
 
 class TestOpenAIClientFactory(TestCase):

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import mock_open, patch
 
-from chatlog_manager import ChatLogManager
+from core.chatlog_manager import ChatLogManager
 
 
 class TestChatlogManager(TestCase):

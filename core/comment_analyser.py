@@ -4,7 +4,7 @@ import re
 from openai import OpenAI
 from typing import List, Tuple
 
-from token_limits import TokenLimits
+from core.token_limits import TokenLimits
 
 
 class CommentAnalyser:

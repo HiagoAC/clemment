@@ -3,7 +3,7 @@ from openai import OpenAI
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock, patch
 
-from comment_analyser import CommentAnalyser
+from core.comment_analyser import CommentAnalyser
 
 
 class TestCommentAnalyser(TestCase):
