@@ -1,8 +1,8 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock, patch, mock_open
 
-from helpers import process_file, analyse_comments_in_path
-from comment_analyser import CommentAnalyser
+from core.file_processing import process_file, analyse_comments_in_path
+from core.comment_analyser import CommentAnalyser
 
 
 class TestHelperFunctions(TestCase):
