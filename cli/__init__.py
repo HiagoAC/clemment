@@ -1,4 +1,4 @@
-from parser import parse_arguments
+from .parser import parse_arguments
 from .commands.chatlog import chatlog
 from .commands.run import run
 
