@@ -65,7 +65,6 @@ class TestRun(TestCase):
             f"Line {suggestions[1][0]}: {suggestions[1][1]}\n"
         )
         self.assertEqual(mock_stdout.getvalue(), expected_output)
-        self.assertTrue(True)
 
     @patch("cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
