@@ -1,3 +1,4 @@
+import json
 from unittest import TestCase
 from unittest.mock import mock_open, patch
 
@@ -6,10 +7,13 @@ from core.chatlog_manager import ChatLogManager
 
 class TestChatlogManager(TestCase):
     def setUp(self):
-        self.mock_file_data = '[{"role": "user", "content": "Hello World"},' \
-                              '{"role": "assistant", "content": "Hi World"}]'
-        self.open_mock = mock_open(read_data=self.mock_file_data)
-        with patch("chatlog_manager.open", self.open_mock, create=True):
+        self.mock_data = [
+            {"role": "user", "content": "Hello"},
+            {"role": "assistant", "content": "Hi"},
+            ]
+        self.mock_json = json.dumps(self.mock_data)
+        self.open_mock = mock_open(read_data=self.mock_json)
+        with patch("core.chatlog_manager.open", self.open_mock, create=True):
             self.chatlog_manager = ChatLogManager("file")
 
     def test_add_chatlog(self):
@@ -39,10 +43,18 @@ class TestChatlogManager(TestCase):
         self.assertEqual(len(self.chatlog_manager.chatlog), 0)
 
     def test_save_chatlog(self):
-        with patch("chatlog_manager.open", self.open_mock, create=True):
+        user_content = "Hello world"
+        assistant_content = "Hi world"
+        with patch("core.chatlog_manager.open", self.open_mock) as mock_file:
             self.chatlog_manager.clear_chatlog()
-            self.chatlog_manager.add_chatlog("Hello", "Hi")
+            self.chatlog_manager.add_chatlog(user_content, assistant_content)
             self.chatlog_manager.save_chatlog()
 
-            # Assert what is written to file is the same as what is in chatlog 
-            self.assertEqual()
+            expected = [
+            {"role": "user", "content": user_content},
+            {"role": "assistant", "content": assistant_content},
+            ]
+            written_data = "".join(
+                call[0][0] for call in mock_file().write.call_args_list)
+
+            self.assertEqual(json.loads(written_data), expected)
