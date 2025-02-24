@@ -1,5 +1,3 @@
-import os
-from openai import OpenAI
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock, patch
 
@@ -25,7 +23,12 @@ class TestCommentAnalyser(TestCase):
         self.assertEqual(self.comment_analyser.total_prompt_tokens, 100)
 
     def test_split_prompt(self):
-        model_token_limit = 100 # chunk_size = 75
+        """
+        Test that _split_prompt splits the prompt into chunks
+        correctly. Chunks should be at most 75% of model
+        token limit.
+        """
+        model_token_limit = 100
         prompt = "a" * 151
         with patch.object(self.comment_analyser.token_limits, "get_token_limit",
                           return_value=model_token_limit):
