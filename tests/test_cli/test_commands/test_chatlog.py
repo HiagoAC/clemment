@@ -46,7 +46,7 @@ class TestChatlog(TestCase):
         """Test chatlog() with get command."""
         args = Namespace(chatlog_command="get")
         with patch("builtins.open", mock_open(
-                read_data=self.mock_json)) as mock_file:
+                read_data=self.mock_json)):
             chatlog(args)
             expected = "\n".join(
                 f"{log['role']}: {log['content']}" for log in self.mock_data)
