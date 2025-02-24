@@ -28,7 +28,7 @@ class TestHelperFunctions(TestCase):
 
     @patch("os.path.isfile")
     @patch("os.walk")
-    def test_analyse_comments_in_path_directory(
+    def test_analyse_comments_in_path_with_dir(
         self, mock_walk, mock_isfile):
         """
         Test that analyse_comments_in_path processes
@@ -49,3 +49,19 @@ class TestHelperFunctions(TestCase):
             for filename in filenames
         ]
         self.assertEqual(response, expected)
+
+    @patch("os.path.isfile")
+    def test_analyse_comments_in_path_with_file(self, mock_isfile):
+        """
+        Test that analyse_comments_in_path processes
+        a single file.
+        """
+        path = "path/to/file.py"
+        mock_isfile.return_value = True
+        response = analyse_comments_in_path(path, self.comment_analyser)
+        self.assertEqual(response, [{
+            "file_path": path,
+            "suggestions": [(1, "A")],
+            "prompt_tokens": 100,
+            "completion_tokens": 50
+        }])
