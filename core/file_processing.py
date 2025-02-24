@@ -42,7 +42,7 @@ def analyse_comments_in_path(
         path (str): The path to the directory to be processed.
     """
     if os.path.isfile(path):
-        return [process_file(path)]
+        return [process_file(path, comment_analyser)]
     res = []
     for _, _, files in os.walk(path):
         for file in files:
