@@ -55,3 +55,12 @@ class TestCommentAnalyser(TestCase):
         suggestions = self.comment_analyser._parse_openai_response(response)
 
         self.assertEqual(suggestions, [(1, "B"), (2, "C")])
+
+    def test_parse_openai_with_all_responses_invalid(self):
+        """
+        Test that _parse_openai_response raises an exception if all choices
+        are invalid
+        """
+        response = ["invalid response", "1, almost valid\n2 C", ""]
+        with self.assertRaises(ValueError):
+            self.comment_analyser._parse_openai_response(response)
