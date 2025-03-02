@@ -80,7 +80,8 @@ class CommentAnalyser:
                     suggestions = []
                     break
             # If the response is in the expected format, ignore next responses
-            break
+            if suggestions:
+                break
 
         if not suggestions:
             raise ValueError(

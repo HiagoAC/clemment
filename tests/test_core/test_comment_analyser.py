@@ -48,3 +48,10 @@ class TestCommentAnalyser(TestCase):
 
         suggestions = self.comment_analyser._parse_openai_response(response)
         self.assertEqual(suggestions, [(1, "A")])
+
+    def test_parse_openai_with_invalid_responses(self):
+        """Test that _parse_openai_response skips invalid choices."""
+        response = ["invalid response", "1, almost valid\n2 C", "1, B\n2, C",]
+        suggestions = self.comment_analyser._parse_openai_response(response)
+
+        self.assertEqual(suggestions, [(1, "B"), (2, "C")])
