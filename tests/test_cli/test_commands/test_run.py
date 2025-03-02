@@ -65,6 +65,19 @@ class TestRun(TestCase):
             f"Line {suggestions[1][0]}: {suggestions[1][1]}\n"
         )
         self.assertEqual(mock_stdout.getvalue(), expected_output)
+    
+    @patch("os.path.exists", return_value=True)
+    @patch("os.getcwd", return_value="current_dir")
+    @patch("cli.commands.run.analyse_comments_in_path")
+    @patch("sys.stdout", new_callable=StringIO)
+    def test_run_with_no_paths(
+            self, mock_stdout, mock_analyse_comments_in_path, mock_getcwd, _):
+        """
+        Test run() uses the current directory with no paths are given to it.
+        """
+        args = Namespace(paths=[])
+        run(args)
+        mock_analyse_comments_in_path.assert_called_once_with("current_dir")
 
     @patch("cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
