@@ -1,7 +1,7 @@
 import os
 import argparse
 
-from core.file_processing import analyse_comments_in_path
+from src.core.file_processing import analyse_comments_in_path
 
 
 def run(args: argparse.Namespace) -> None:

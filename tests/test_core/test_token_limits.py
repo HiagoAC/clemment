@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from core.token_limits import TokenLimits
+from src.core.token_limits import TokenLimits
 
 
 class TestTokenLimits(TestCase):

@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock, patch
 
-from core.comment_analyser import CommentAnalyser
+from src.core.comment_analyser import CommentAnalyser
 
 
 class TestCommentAnalyser(TestCase):

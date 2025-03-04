@@ -1,7 +1,7 @@
 import os
 from typing import TypedDict, List, Tuple
-from core.openai_client_factory import OpenAIClientFactory
-from core.comment_analyser import CommentAnalyser
+from src.core.openai_client_factory import OpenAIClientFactory
+from src.core.comment_analyser import CommentAnalyser
 
 
 class CommentAnalysis(TypedDict):
