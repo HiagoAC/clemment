@@ -1,0 +1,32 @@
+name: Python CI Pipeline
+
+on:
+  push:
+    paths:
+      - 'src/**'
+      - 'tests/**'
+      - '.github/workflows/ci.yaml'
+
+jobs:
+  test-lint:
+    name: Testing and Linting
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Build Docker image
+        run: docker build --build-arg DEV=true -t ci-image ../
+      - name: Create .env file
+        run: |
+          touch .env
+          echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
+          cat .env
+      - name: Test
+        run: docker run --rm ci-image bash -c "coverage run --source=. -m unittest discover && coverage XML"
+      - name: Lint
+        run: docker run --rm ci-image bash -c "flake8"
