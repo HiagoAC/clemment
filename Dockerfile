@@ -9,7 +9,7 @@ RUN pip install --upgrade pip
 RUN apk update && apk add --no-cache bash
 RUN pip install --no-cache-dir -r tmp/requirements.txt
 
-COPY ./src/ /src/
+COPY ./src/ /app/src/
 
 ARG ARG DEV=false
 COPY requirements.dev.txt /tmp/requirements.dev.txt
