@@ -20,7 +20,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
       - name: Build Docker image
-        run: docker build --build-arg DEV=true -t ci-image ../
+        run: docker build --build-arg DEV=true -t ci-image .
       - name: Create .env file
         run: |
           touch .env
