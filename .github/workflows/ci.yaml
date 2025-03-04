@@ -29,6 +29,8 @@ jobs:
           touch .env
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
           cat .env
+          pwd
+          ls -al
       - name: Test
         run: docker run --rm ci-image bash -c "coverage run --source=. -m unittest discover && coverage XML"
       - name: Lint
