@@ -12,7 +12,8 @@ class ChatLogManager:
     def add_chatlog(self, user_input, assistant_response):
         """ Add chatlog to chatlog list. """
         self.chatlog.append({"role": "user", "content": user_input})
-        self.chatlog.append({"role": "assistant", "content": assistant_response})
+        self.chatlog.append(
+            {"role": "assistant", "content": assistant_response})
 
     def get_chatlog(self):
         return self.chatlog

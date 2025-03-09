@@ -65,7 +65,7 @@ class TestRun(TestCase):
             f"Line {suggestions[1][0]}: {suggestions[1][1]}\n"
         )
         self.assertEqual(mock_stdout.getvalue(), expected_output)
-    
+
     @patch("os.path.exists", return_value=True)
     @patch("os.getcwd", return_value="current_dir")
     @patch("src.cli.commands.run.analyse_comments_in_path")

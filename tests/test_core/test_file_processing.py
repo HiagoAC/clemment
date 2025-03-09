@@ -29,7 +29,7 @@ class TestHelperFunctions(TestCase):
     @patch("os.path.isfile")
     @patch("os.walk")
     def test_analyse_comments_in_path_with_dir(
-        self, mock_walk, mock_isfile):
+            self, mock_walk, mock_isfile):
         """
         Test that analyse_comments_in_path processes
         all files in a directory.

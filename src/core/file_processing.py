@@ -6,7 +6,7 @@ from src.core.comment_analyser import CommentAnalyser
 
 class CommentAnalysis(TypedDict):
     file_path: str
-    suggestions: List[Tuple[int, str]] # line_number, suggestion
+    suggestions: List[Tuple[int, str]]  # line_number, suggestion
     prompt_tokens: int
     completion_tokens: int
 

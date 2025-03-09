@@ -2,6 +2,7 @@ import os
 from openai import OpenAI
 from dotenv import load_dotenv
 
+
 class OpenAIClientFactory:
     """ Factory class to create OpenAI client. """
     def create_client(self, api_key: str | None = None) -> OpenAI:

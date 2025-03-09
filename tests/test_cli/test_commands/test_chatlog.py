@@ -18,7 +18,7 @@ class TestChatlog(TestCase):
         self.mock_json = json.dumps(self.mock_data)
         self.patcher_stdout = patch("sys.stdout", new_callable=StringIO)
         self.mock_stdout = self.patcher_stdout.start()
-    
+
     def tearDown(self):
         self.patcher_stdout.stop()
 

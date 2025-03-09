@@ -6,7 +6,7 @@ from src.core.token_limits import TokenLimits
 class TestTokenLimits(TestCase):
     def setUp(self):
         self.token_limits = TokenLimits()
-    
+
     def test_get_token_limit_with_known_model(self):
         token_limit = self.token_limits.get_token_limit("o1")
         self.assertEqual(

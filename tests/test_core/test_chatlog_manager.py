@@ -13,7 +13,8 @@ class TestChatlogManager(TestCase):
             ]
         self.mock_json = json.dumps(self.mock_data)
         self.open_mock = mock_open(read_data=self.mock_json)
-        with patch("src.core.chatlog_manager.open", self.open_mock, create=True):
+        with patch(
+                "src.core.chatlog_manager.open", self.open_mock, create=True):
             self.chatlog_manager = ChatLogManager("file")
 
     def test_add_chatlog(self):
@@ -45,14 +46,15 @@ class TestChatlogManager(TestCase):
     def test_save_chatlog(self):
         user_content = "Hello world"
         assistant_content = "Hi world"
-        with patch("src.core.chatlog_manager.open", self.open_mock) as mock_file:
+        with patch(
+                "src.core.chatlog_manager.open", self.open_mock) as mock_file:
             self.chatlog_manager.clear_chatlog()
             self.chatlog_manager.add_chatlog(user_content, assistant_content)
             self.chatlog_manager.save_chatlog()
 
             expected = [
-            {"role": "user", "content": user_content},
-            {"role": "assistant", "content": assistant_content},
+                {"role": "user", "content": user_content},
+                {"role": "assistant", "content": assistant_content},
             ]
             written_data = "".join(
                 call[0][0] for call in mock_file().write.call_args_list)

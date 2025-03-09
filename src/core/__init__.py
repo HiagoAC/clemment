@@ -6,4 +6,4 @@ from .token_limits import TokenLimits
 
 
 __all__ = ["ChatLogManager", "CommentAnalyser", "process_file",
-              "analyse_comments_in_path", "OpenAIClientFactory", "TokenLimits"]
+           "analyse_comments_in_path", "OpenAIClientFactory", "TokenLimits"]
