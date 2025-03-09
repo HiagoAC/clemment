@@ -22,16 +22,13 @@ jobs:
           password: ${{ secrets.DOCKERHUB_TOKEN }}
       - name: Checkout
         uses: actions/checkout@v4
-      - name: Build Docker image
-        run: docker build --build-arg DEV=true -t ci-image .
       - name: Create .env file
         run: |
           touch .env
           echo OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }} >> .env
-          cat .env
-          pwd
-          ls -al
+      - name: Build Docker image
+        run: docker build --build-arg DEV=true -t ci-image .
       - name: Test
-        run: docker run --rm ci-image bash -c "coverage run --source=. -m unittest discover && coverage XML"
+        run: docker run --rm --env-file .env ci-image bash -c "coverage run --source=. -m unittest discover && coverage xml"
       - name: Lint
         run: docker run --rm ci-image bash -c "flake8"
