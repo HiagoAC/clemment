@@ -21,4 +21,10 @@ else \
     rm -rf /tmp/requirements.dev.txt tests/ .env; \
 fi
 
+RUN addgroup -S nonroot \
+    && adduser -S nonroot -G nonroot \
+    && chown -R nonroot:nonroot /app \
+    && chmod -R 755 /app
+USER nonroot
+
 CMD ["python", "main.py"]
