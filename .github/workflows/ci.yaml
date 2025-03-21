@@ -29,11 +29,12 @@ jobs:
       - name: Build Docker image
         run: docker build --build-arg DEV=true -t ci-image .
       - name: Test
-        run: docker run --rm \
-              -v $(pwd):/app \
-              --env-file .env \
-              ci-image \
-              bash -c "coverage run --source=. -m unittest discover && coverage xml"
+        run: |
+          docker run --rm \
+            -v $(pwd):/app \
+            --env-file .env \
+            ci-image \
+            bash -c "coverage run --source=. -m unittest discover && coverage xml"
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
