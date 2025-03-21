@@ -30,7 +30,7 @@ jobs:
         run: docker build --build-arg DEV=true -t ci-image .
       - name: Test
         run: |
-          chmod -R 755 /app &&
+          chmod -R 755 $(pwd) &&
           docker run --rm \
             -v $(pwd):/app \
             --env-file .env \
