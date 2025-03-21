@@ -30,10 +30,10 @@ jobs:
         run: docker build --build-arg DEV=true -t ci-image .
       - name: Test
         run: |
+          chmod -R 755 /app &&
           docker run --rm \
             -v $(pwd):/app \
             --env-file .env \
-            --user root \
             ci-image \
             bash -c "coverage run --source=. -m unittest discover && coverage xml"
       - name: Upload coverage reports to Codecov
