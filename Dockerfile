@@ -11,7 +11,7 @@ RUN pip install --no-cache-dir -r tmp/requirements.txt
 
 COPY ./src/ /app/src/
 
-ARG ARG DEV=false
+ARG DEV=false
 COPY ./requirements.dev.txt /tmp/requirements.dev.txt
 COPY ./.env /app/.env
 COPY tests/ tests/
