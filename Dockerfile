@@ -5,9 +5,9 @@ WORKDIR /app
 
 COPY ./requirements.txt tmp/requirements.txt
 
-RUN pip install --upgrade pip
-RUN apk update && apk add --no-cache bash
-RUN pip install --no-cache-dir -r tmp/requirements.txt
+RUN pip install --upgrade pip \
+    && apk update && apk add --no-cache bash \
+    && pip install --no-cache-dir -r tmp/requirements.txt
 
 COPY ./src/ /app/src/
 
