@@ -1,0 +1,19 @@
+[project]
+name = "clemment"
+version = "0.0.1"
+authors = [
+  { name="Hiago Correa" },
+]
+description = "An LLM-powered tool to identify incorrect and misleading comments in codebases and provide suggestions for corrections."
+readme = "README.md"
+requires-python = ">=3.8"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/HiagoAC/clemment"
+Issues = "https://github.com/HiagoAC/clemment/issues"
