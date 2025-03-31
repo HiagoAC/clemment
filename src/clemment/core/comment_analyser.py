@@ -4,14 +4,17 @@ import re
 from openai import OpenAI
 from typing import List, Tuple
 
+from ..utils.path_utils import get_absolute_path
 from .token_limits import TokenLimits
 
 
 class CommentAnalyser:
     """ Analyse comments in source code. """
     def __init__(self, client: OpenAI):
-        self.SYSTEM_CONTENT_PATH = "data/system_content.json"
-        self.CHATLOG_PATH = "data/chatlog.json"
+        self.SYSTEM_CONTENT_PATH = get_absolute_path(
+            'system_content.json', ['data'])
+        self.CHATLOG_PATH = get_absolute_path(
+            'chatlog.json', ['data'])
         self.total_completion_tokens = 0
         self.total_prompt_tokens = 0
         self.client = client
