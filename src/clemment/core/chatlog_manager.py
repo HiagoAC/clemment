@@ -4,7 +4,7 @@ import json
 class ChatLogManager:
     """ Class to manage chatlog data """
 
-    def __init__(self, path="src/data/chatlog.json"):
+    def __init__(self, path="data/chatlog.json"):
         self.path = path
         with open(self.path, "r") as file:
             self.chatlog = json.load(file)

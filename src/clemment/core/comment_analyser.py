@@ -4,14 +4,14 @@ import re
 from openai import OpenAI
 from typing import List, Tuple
 
-from src.core.token_limits import TokenLimits
+from clemment.core.token_limits import TokenLimits
 
 
 class CommentAnalyser:
     """ Analyse comments in source code. """
     def __init__(self, client: OpenAI):
-        self.SYSTEM_CONTENT_PATH = "src/data/system_content.json"
-        self.CHATLOG_PATH = "src/data/chatlog.json"
+        self.SYSTEM_CONTENT_PATH = "data/system_content.json"
+        self.CHATLOG_PATH = "data/chatlog.json"
         self.total_completion_tokens = 0
         self.total_prompt_tokens = 0
         self.client = client
