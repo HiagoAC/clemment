@@ -12,7 +12,7 @@ class TestPathUtils(TestCase):
             Path('/project/root/')
         )
         self.mock_project_root = self.patcher.start()
-    
+
     def tearDown(self):
         self.patcher.stop()
 
@@ -27,5 +27,5 @@ class TestPathUtils(TestCase):
 
         res = get_absolute_path(filename, subdirs)
 
-        self.assertEqual(res,
-            str(self.mock_project_root / subdir1 / subdir2 / filename))
+        self.assertEqual(
+            res, str(self.mock_project_root / subdir1 / subdir2 / filename))
