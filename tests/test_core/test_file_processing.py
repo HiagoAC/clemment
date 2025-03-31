@@ -1,7 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, patch, mock_open
 
-from src.core.file_processing import process_file, analyse_comments_in_path
+from clemment.core.file_processing import process_file, analyse_comments_in_path
 
 
 class TestHelperFunctions(TestCase):

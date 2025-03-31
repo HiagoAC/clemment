@@ -5,7 +5,7 @@ from io import StringIO
 from unittest import TestCase
 from unittest.mock import mock_open, patch
 
-from src.cli import chatlog
+from clemment.cli import chatlog
 
 
 class TestChatlog(TestCase):
