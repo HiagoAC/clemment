@@ -1,6 +1,6 @@
 from unittest import TestCase
 
-from clemment.core.token_limits import TokenLimits
+from src.clemment.core.token_limits import TokenLimits
 
 
 class TestTokenLimits(TestCase):

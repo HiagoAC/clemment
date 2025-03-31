@@ -3,12 +3,12 @@ from io import StringIO
 from unittest import TestCase
 from unittest.mock import patch
 
-from clemment.cli import run
+from src.clemment.cli import run
 
 
 class TestRun(TestCase):
     @patch("os.path.exists", return_value=True)
-    @patch("clemment.cli.commands.run.analyse_comments_in_path")
+    @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
     def test_run_with_valid_path(
             self, mock_stdout, mock_analyse_comments_in_path, _):
@@ -34,7 +34,7 @@ class TestRun(TestCase):
         self.assertEqual(mock_stdout.getvalue(), expected_output)
 
     @patch("os.path.exists", return_value=True)
-    @patch("clemment.cli.commands.run.analyse_comments_in_path")
+    @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
     def test_run_with_multiple_valid_paths(
             self, mock_stdout, mock_analyse_comments_in_path, _):
@@ -68,7 +68,7 @@ class TestRun(TestCase):
 
     @patch("os.path.exists", return_value=True)
     @patch("os.getcwd", return_value="current_dir")
-    @patch("clemment.cli.commands.run.analyse_comments_in_path")
+    @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
     def test_run_with_no_paths(
             self, mock_stdout, mock_analyse_comments_in_path, mock_getcwd, _):
@@ -79,7 +79,7 @@ class TestRun(TestCase):
         run(args)
         mock_analyse_comments_in_path.assert_called_once_with("current_dir")
 
-    @patch("clemment.cli.commands.run.analyse_comments_in_path")
+    @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
     def test_run_with_invalid_path(
             self, mock_stdout, mock_analyse_comments_in_path):
