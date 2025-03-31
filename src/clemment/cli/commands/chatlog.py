@@ -1,5 +1,5 @@
 import argparse
-from clemment.core.chatlog_manager import ChatLogManager
+from ...core.chatlog_manager import ChatLogManager
 
 
 def chatlog(args: argparse.Namespace) -> None:

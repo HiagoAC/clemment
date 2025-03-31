@@ -1,7 +1,7 @@
 import os
 import argparse
 
-from clemment.core.file_processing import analyse_comments_in_path
+from ...core.file_processing import analyse_comments_in_path
 
 
 def run(args: argparse.Namespace) -> None:

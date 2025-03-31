@@ -1,7 +1,7 @@
 import os
 from typing import TypedDict, List, Tuple
-from clemment.core.openai_client_factory import OpenAIClientFactory
-from clemment.core.comment_analyser import CommentAnalyser
+from .openai_client_factory import OpenAIClientFactory
+from .comment_analyser import CommentAnalyser
 
 
 class CommentAnalysis(TypedDict):
