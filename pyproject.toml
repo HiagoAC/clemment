@@ -1,6 +1,11 @@
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "clemment"
 version = "0.0.1"
+dynamic = ["dependencies"]
 authors = [
   { name="Hiago Correa" },
 ]
@@ -13,6 +18,9 @@ classifiers = [
 ]
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
+
+[tool.setuptools.dynamic]
+dependencies = { file = ["requirements.txt"] }
 
 [project.urls]
 Homepage = "https://github.com/HiagoAC/clemment"
