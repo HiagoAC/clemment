@@ -1,4 +1,4 @@
-from cli import parse_arguments, run, chatlog
+from .cli import parse_arguments, run, chatlog
 
 
 def main() -> None:

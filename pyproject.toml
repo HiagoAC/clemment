@@ -19,6 +19,9 @@ classifiers = [
 license = "MIT"
 license-files = ["LICEN[CS]E*"]
 
+[project.scripts]
+clemment = "clemment.__main__:main"
+
 [tool.setuptools.dynamic]
 dependencies = { file = ["requirements.txt"] }
 
