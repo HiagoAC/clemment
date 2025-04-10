@@ -25,5 +25,5 @@ class TestOpenAIClientFactory(TestCase):
 
     @patch("os.getenv", return_value=None)
     def test_create_client_without_api_key(self, mock_getenv):
-        with self.assertRaises(ValueError):
+        with self.assertRaises(RuntimeError):
             self.factory.create_client()

@@ -12,6 +12,6 @@ class OpenAIClientFactory:
             if os.getenv('OPENAI_API_KEY') is not None:
                 api_key = os.getenv('OPENAI_API_KEY')
             else:
-                raise ValueError(
+                raise RuntimeError(
                     "OpenAI API key is not set in the environment variables.")
         return OpenAI(api_key=api_key)
