@@ -30,7 +30,7 @@ class TestPathUtils(TestCase):
 
         self.assertEqual(
             res, str(self.mock_project_root / subdir1 / subdir2 / filename))
-    
+
     def test_discover_files_success(self):
         """
         Test discover_files returns a list of files in a directory and its
