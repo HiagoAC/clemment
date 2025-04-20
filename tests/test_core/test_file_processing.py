@@ -1,3 +1,4 @@
+from pathlib import Path
 from unittest import TestCase
 from unittest.mock import MagicMock, patch, mock_open
 
@@ -37,7 +38,7 @@ class TestHelperFunctions(TestCase):
         Test that analyse_comments_in_path processes
         all files in a directory.
         """
-        path = "path/to/directory"
+        path = Path("path/to/directory")
         filenames = ["file1.py", "file2.py"]
         mock_isfile.return_value = False
         mock_walk.return_value = [(path, [], filenames)]
@@ -59,7 +60,7 @@ class TestHelperFunctions(TestCase):
         Test that analyse_comments_in_path processes
         a single file.
         """
-        path = "path/to/file.py"
+        path = Path("path/to/file.py")
         mock_isfile.return_value = True
         response = analyse_comments_in_path(path, self.comment_analyser)
         self.assertEqual(response, [{

@@ -1,7 +1,9 @@
 import os
+from pathlib import Path
 from typing import TypedDict, List, Tuple
 from .openai_client_factory import OpenAIClientFactory
 from .comment_analyser import CommentAnalyser
+from ..utils.path_utils import discover_files
 
 
 class CommentAnalysis(TypedDict):
@@ -31,7 +33,7 @@ def process_file(path: str, comment_analyser: CommentAnalyser
 
 
 def analyse_comments_in_path(
-        path: str,
+        path: Path,
         comment_analyser: CommentAnalyser = CommentAnalyser(
             OpenAIClientFactory().create_client())
             ) -> List[CommentAnalysis]:
@@ -43,10 +45,8 @@ def analyse_comments_in_path(
     """
     if os.path.isfile(path):
         return [process_file(path, comment_analyser)]
-    res = []
-    for _, _, files in os.walk(path):
-        for file in files:
-            file_path = os.path.join(path, file)
-            res.append(process_file(file_path, comment_analyser))
 
-    return res
+    result = []
+    for file_path in discover_files(path):
+        result.append(process_file(file_path, comment_analyser))
+    return result
