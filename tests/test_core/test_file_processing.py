@@ -22,7 +22,7 @@ class TestHelperFunctions(TestCase):
         self.patcher_open.stop()
 
     def test_process_file(self):
-        response = process_file("path/to/file.py", self.comment_analyser)
+        response = process_file(Path("path/to/file.py"), self.comment_analyser)
         self.assertEqual(response, {
             "file_path": "path/to/file.py",
             "suggestions": [(1, "A")],
@@ -64,7 +64,7 @@ class TestHelperFunctions(TestCase):
         mock_isfile.return_value = True
         response = analyse_comments_in_path(path, self.comment_analyser)
         self.assertEqual(response, [{
-            "file_path": path,
+            "file_path": str(path),
             "suggestions": [(1, "A")],
             "prompt_tokens": 100,
             "completion_tokens": 50

@@ -13,19 +13,19 @@ class CommentAnalysis(TypedDict):
     completion_tokens: int
 
 
-def process_file(path: str, comment_analyser: CommentAnalyser
+def process_file(path: Path, comment_analyser: CommentAnalyser
                  ) -> CommentAnalysis:
     """
     Process a single file to analyze comments.
 
     Args:
-        path (str): The path to the file to be processed.
+        path (Path): The path to the file to be processed.
     """
     with open(path, "r") as file:
         source_code = file.read()
     suggestions = comment_analyser.analyse_comments(source_code)
     return {
-        "file_path": path,
+        "file_path": str(path),
         "suggestions": suggestions,
         "prompt_tokens": comment_analyser.total_prompt_tokens,
         "completion_tokens": comment_analyser.total_completion_tokens,
