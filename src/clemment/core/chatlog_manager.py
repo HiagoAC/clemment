@@ -1,10 +1,12 @@
 import json
 
+from ..config import CHATLOG_PATH
+
 
 class ChatLogManager:
     """ Class to manage chatlog data """
 
-    def __init__(self, path="data/chatlog.json"):
+    def __init__(self, path=CHATLOG_PATH):
         self.path = path
         with open(self.path, "r") as file:
             self.chatlog = json.load(file)

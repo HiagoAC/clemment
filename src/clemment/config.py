@@ -1,6 +1,9 @@
 from dotenv import load_dotenv
 import os
 
+# CONSTANTS
+CHATLOG_PATH = "data/chatlog.json"
+
 
 def get_openai_api_key() -> str:
     """Get OpenAI API key from environment variable or .env file."""
