@@ -1,5 +1,6 @@
 from ..config import MODEL_TOKEN_LIMITS
 
+
 class TokenLimits:
     """
     A class to manage and retrieve token limits for OpenAI models.
