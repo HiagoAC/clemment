@@ -11,17 +11,17 @@ class TestOpenAIClientFactory(TestCase):
         self.factory = OpenAIClientFactory()
 
     def test_create_client_with_api_key(self):
-        comment_analyser = self.factory.create_client("test-key")
+        openai_client = self.factory.create_client("test-key")
 
-        self.assertEqual(comment_analyser.api_key, "test-key")
-        self.assertIsInstance(comment_analyser, OpenAI)
+        self.assertEqual(openai_client.api_key, "test-key")
+        self.assertIsInstance(openai_client, OpenAI)
 
     def test_create_client_with_env_api_key(self):
         with patch.dict(os.environ, {"OPENAI_API_KEY": "test-key"}):
-            comment_analyser = self.factory.create_client()
+            openai_client = self.factory.create_client()
 
-            self.assertEqual(comment_analyser.api_key, "test-key")
-            self.assertIsInstance(comment_analyser, OpenAI)
+            self.assertEqual(openai_client.api_key, "test-key")
+            self.assertIsInstance(openai_client, OpenAI)
 
     @patch("os.getenv", return_value=None)
     def test_create_client_without_api_key(self, mock_getenv):
