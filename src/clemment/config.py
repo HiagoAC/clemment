@@ -4,6 +4,15 @@ import os
 # CONSTANTS
 CHATLOG_PATH = "data/chatlog.json"
 
+MODEL_TOKEN_LIMITS = {
+    "gpt-4": 8192,
+    "gpt-4-turbo": 128000,
+    "gpt-4o": 128000,
+    "gpt-4o-mini": 128000,
+    "o1": 200000,
+    "o1-mini": 128000,
+}
+
 
 def get_openai_api_key() -> str:
     """Get OpenAI API key from environment variable or .env file."""

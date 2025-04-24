@@ -1,16 +1,11 @@
+from ..config import MODEL_TOKEN_LIMITS
+
 class TokenLimits:
     """
     A class to manage and retrieve token limits for OpenAI models.
     """
     def __init__(self):
-        self._model_token_limits = {
-            "gpt-4": 8192,
-            "gpt-4-turbo": 128000,
-            "gpt-4o": 128000,
-            "gpt-4o-mini": 128000,
-            "o1": 200000,
-            "o1-mini": 128000,
-        }
+        self._model_token_limits = MODEL_TOKEN_LIMITS
 
     def get_token_limit(self, model: str) -> int:
         """
