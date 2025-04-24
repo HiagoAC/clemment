@@ -1,7 +1,6 @@
 import os
 from pathlib import Path
 from typing import TypedDict, List, Tuple
-from .openai_client_factory import OpenAIClientFactory
 from .comment_analyser import CommentAnalyser
 from ..utils.path_utils import discover_files
 
@@ -34,8 +33,7 @@ def process_file(path: Path, comment_analyser: CommentAnalyser
 
 def analyse_comments_in_path(
         path: Path,
-        comment_analyser: CommentAnalyser = CommentAnalyser(
-            OpenAIClientFactory().create_client())
+        comment_analyser: CommentAnalyser
             ) -> List[CommentAnalysis]:
     """
     Process a directory to analyze comments in all files.

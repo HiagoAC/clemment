@@ -1,12 +1,15 @@
 from argparse import Namespace
 from io import StringIO
 from unittest import TestCase
-from unittest.mock import patch
+from unittest.mock import Mock, patch
 
 from src.clemment.cli import run
 
 
 class TestRun(TestCase):
+    def setUp(self):
+        self.comment_analyser = Mock()
+
     @patch("os.path.exists", return_value=True)
     @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
@@ -22,7 +25,7 @@ class TestRun(TestCase):
             }
         ]
         args = Namespace(paths=["test.py"])
-        run(args)
+        run(args, self.comment_analyser)
         expected_output = (
             "Total prompt tokens: 2\n"
             "Total completion tokens: 3\n"
@@ -52,7 +55,7 @@ class TestRun(TestCase):
             }
         ]
         args = Namespace(paths=["test.py", "test2.py"])
-        run(args)
+        run(args, self.comment_analyser)
         expected_output = (
             f"Total prompt tokens: {prompt_tokens*2}\n"
             f"Total completion tokens: {completion_tokens*2}\n"
@@ -76,8 +79,9 @@ class TestRun(TestCase):
         Test run() uses the current directory with no paths are given to it.
         """
         args = Namespace(paths=[])
-        run(args)
-        mock_analyse_comments_in_path.assert_called_once_with("current_dir")
+        run(args, self.comment_analyser)
+        mock_analyse_comments_in_path.assert_called_once_with(
+            "current_dir", self.comment_analyser)
 
     @patch("src.clemment.cli.commands.run.analyse_comments_in_path")
     @patch("sys.stdout", new_callable=StringIO)
@@ -88,4 +92,4 @@ class TestRun(TestCase):
         invalid_path = "invalid_path"
         args = Namespace(paths=[invalid_path])
         with self.assertRaises(ValueError):
-            run(args)
+            run(args, self.comment_analyser)
