@@ -1,6 +1,7 @@
 from unittest import TestCase
 from unittest.mock import MagicMock, Mock, patch
 
+from src.clemment.config import SYSTEM_CONTENT_PATH, CHATLOG_PATH
 from src.clemment.core.comment_analyser import CommentAnalyser
 
 
@@ -13,7 +14,11 @@ class TestCommentAnalyser(TestCase):
             usage=Mock(completion_tokens=50, prompt_tokens=100)
         )
 
-        self.comment_analyser = CommentAnalyser(client=mock_client)
+        self.comment_analyser = CommentAnalyser(
+            client=mock_client,
+            system_content_path=SYSTEM_CONTENT_PATH,
+            chatlog_path=CHATLOG_PATH
+        )
 
     def test_analyse_comments(self):
         suggestions = self.comment_analyser.analyse_comments("prompt", "model")
