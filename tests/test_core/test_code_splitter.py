@@ -15,6 +15,16 @@ class TestCodeSplitter(TestCase):
             self.code_splitter = CodeSplitter(
                 model=self.model, chunk_size=self.chunk_size)
 
+    def test_init_with_invalid_chunk_size(self):
+        """
+        Test that CodeSplitter raises ValueError if chunk size exceeds
+        model token limit.
+        """
+        with self.assertRaises(ValueError), patch(
+            "src.clemment.core.code_splitter.MODEL_TOKEN_LIMITS",
+                {self.model: self.token_limit}):
+            CodeSplitter(model=self.model, chunk_size=self.token_limit + 1)
+
     def test_count_tokens(self):
         """Test _count_tokens method works correctly."""
         code = "def hello_world():\n    print('Hello, world!')"
