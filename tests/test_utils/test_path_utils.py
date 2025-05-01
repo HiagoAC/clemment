@@ -53,5 +53,4 @@ class TestPathUtils(TestCase):
                 os.path.join(path, file2),
                 os.path.join(path, subdirs[0], subdirs[1], file3),
             ]
-            print(expected)
             self.assertEqual(result, expected)
